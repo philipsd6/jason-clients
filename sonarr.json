@@ -25,7 +25,7 @@
           "type": "tabs",
           "items": [{
             "text": "Series",
-            "url": "sonarr-series.json"
+            "url": "sonarr.json"
           }, {
             "text": "Calendar",
             "url": "sonarr-calendar.json"
