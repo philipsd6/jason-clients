@@ -1,0 +1,47 @@
+{
+  "$jason": {
+    "head": {
+      "title": "Sonarr",
+      "description": "Sonarr is a PVR for Usenet and BitTorrent users",
+      "icon": "http://nuxref.com/wp-content/uploads/2014/07/nzbdrone128x128-icon.png",
+      "website": {
+        "text": "Click here to learn how add keys",
+        "url": "http://www.jasonclient.org/help"
+      }
+    },
+    "body": {
+      "nav": {
+        "items": [
+          {
+            "type": "search",
+            "name": "query_text",
+            "action": {
+              "type": "$widget.alert",
+              "options": {
+                "title": "You've entered:",
+                "description": "{{$get.query_text}}"
+              }
+            }
+          },
+          {
+            "type": "tabs",
+            "items": [
+              {
+                "text": "Series",
+                "url": "http://openjason.org/1.json"
+              },
+              {
+                "text": "Calendar",
+                "url": "http://openjason.org/2.json"
+              },
+              {
+                "text": "Wanted",
+                "url": "http://openjason.org/3.json"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
