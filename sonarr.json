@@ -7,6 +7,29 @@
       "website": {
         "text": "Click here to learn how add keys",
         "url": "http://www.jasonclient.org/help"
+      },
+      "actions": {
+        "$load": {
+          "type": "$network.request",
+          "options": {
+            "url": "{{$keys.base_url}}/series?apikey={{$keys.api_key}}"
+          },
+          "success": {
+            "type": "$render"
+          }
+        }
+      },
+      "templates": {
+        "body": {
+          "sections": [{
+            "items": {
+              "{{#each $jason}}": {
+                "type": "label",
+                "url": "{{title}}"
+              }
+            }
+          }]
+        }
       }
     },
     "body": {
