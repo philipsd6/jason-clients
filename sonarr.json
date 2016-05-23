@@ -25,13 +25,13 @@
           "type": "tabs",
           "items": [{
             "text": "Series",
-            "url": "sonarr.json"
+            "url": "https://raw.githubusercontent.com/philipsd6/jason-clients/master/sonarr.json"
           }, {
             "text": "Calendar",
-            "url": "sonarr-calendar.json"
+            "url": "https://raw.githubusercontent.com/philipsd6/jason-clients/master/sonarr-calendar.json"
           }, {
             "text": "Wanted",
-            "url": "sonarr-wanted.json"
+            "url": "https://raw.githubusercontent.com/philipsd6/jason-clients/master/sonarr-wanted.json"
           }]
         }]
       }
