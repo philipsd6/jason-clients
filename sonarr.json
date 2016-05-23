@@ -11,36 +11,29 @@
     },
     "body": {
       "nav": {
-        "items": [
-          {
-            "type": "search",
-            "name": "query_text",
-            "action": {
-              "type": "$widget.alert",
-              "options": {
-                "title": "You've entered:",
-                "description": "{{$get.query_text}}"
-              }
+        "items": [{
+          "type": "search",
+          "name": "query_text",
+          "action": {
+            "type": "$widget.alert",
+            "options": {
+              "title": "You've entered:",
+              "description": "{{$get.query_text}}"
             }
-          },
-          {
-            "type": "tabs",
-            "items": [
-              {
-                "text": "Series",
-                "url": "http://openjason.org/1.json"
-              },
-              {
-                "text": "Calendar",
-                "url": "http://openjason.org/2.json"
-              },
-              {
-                "text": "Wanted",
-                "url": "http://openjason.org/3.json"
-              }
-            ]
           }
-        ]
+        },{
+          "type": "tabs",
+          "items": [{
+            "text": "Series",
+            "url": "sonarr-series.json"
+          }, {
+            "text": "Calendar",
+            "url": "sonarr-calendar.json"
+          }, {
+            "text": "Wanted",
+            "url": "sonarr-wanted.json"
+          }]
+        }]
       }
     }
   }
