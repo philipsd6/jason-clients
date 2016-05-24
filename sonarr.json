@@ -1,62 +1,35 @@
 {
   "$jason": {
     "head": {
-      "title": "Sonarr",
-      "description": "Sonarr is a PVR for Usenet and BitTorrent users",
-      "icon": "http://nuxref.com/wp-content/uploads/2014/07/nzbdrone128x128-icon.png",
+      "title": "Sonarr", 
+      "description": "Sonarr is a PVR for Usenet and BitTorrent users", 
+      "icon": "http://nuxref.com/wp-content/uploads/2014/07/nzbdrone128x128-icon.png", 
       "website": {
-        "text": "Click here to learn how add keys",
-        "url": "http://www.jasonclient.org/help"
-      },
+        "text": "Click here to learn about Sonarr", 
+        "url": "https://sonarr.tv/"
+      }, 
       "actions": {
+        "$pull": {
+          "type": "$cache.reset", 
+          "success": {
+            "trigger": "fetch"
+          }, 
+          "error": {
+            "trigger": "fetch"
+          }
+        }, 
         "$load": {
-          "type": "$network.request",
+          "type": "$network.request", 
           "options": {
-            "url": "{{$keys.base_url}}/series?apikey={{$keys.api_key}}"
-          },
+            "url": "{{$keys.base_url}}/series", 
+            "headers": {
+              "X-Api-Key": "{{$keys.api_key}}"
+            }
+          }, 
           "success": {
             "type": "$render"
           }
         }
-      },
-      "templates": {
-        "body": {
-          "sections": [{
-            "items": {
-              "{{#each $jason}}": {
-                "type": "label",
-                "url": "{{title}}"
-              }
-            }
-          }]
-        }
-      }
-    },
-    "body": {
-      "nav": {
-        "items": [{
-          "type": "search",
-          "name": "query_text",
-          "action": {
-            "type": "$widget.alert",
-            "options": {
-              "title": "You've entered:",
-              "description": "{{$get.query_text}}"
-            }
-          }
-        },{
-          "type": "tabs",
-          "items": [{
-            "text": "Series",
-            "url": "https://raw.githubusercontent.com/philipsd6/jason-clients/master/sonarr.json"
-          }, {
-            "text": "Calendar",
-            "url": "https://raw.githubusercontent.com/philipsd6/jason-clients/master/sonarr-calendar.json"
-          }, {
-            "text": "Wanted",
-            "url": "https://raw.githubusercontent.com/philipsd6/jason-clients/master/sonarr-wanted.json"
-          }]
-        }]
       }
     }
   }

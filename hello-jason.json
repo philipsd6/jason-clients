@@ -2,26 +2,32 @@
   "$jason": {
     "head": {
       "title": "Hello Jason"
-    },
+    }, 
     "body": {
       "style": {
         "border": "none"
-      },
-      "sections": [{
-        "items": [{
-          "type": "image",
-          "url": "https://media.giphy.com/media/tBb19f74gLy3DhI2OGY/giphy.gif",
-          "style": {
-            "width": "100%"
-          }
-        }, {
-          "type": "label",
-          "text": "Batman and Robin"
-        }, {
-          "type": "label",
-          "text": "Today the heroes meet the match of their lives."
-        }]
-      }]
+      }, 
+      "sections": [
+        {
+          "items": [
+            {
+              "type": "image", 
+              "url": "https://media.giphy.com/media/tBb19f74gLy3DhI2OGY/giphy.gif", 
+              "style": {
+                "width": "100%"
+              }
+            }, 
+            {
+              "type": "label", 
+              "text": "Batman and Robin"
+            }, 
+            {
+              "type": "label", 
+              "text": "Today the heroes meet the match of their lives."
+            }
+          ]
+        }
+      ]
     }
   }
 }
