@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+import os
+import sys
+import yaml
+import json
+from collections import OrderedDict
+
+program = os.path.basename(sys.argv[0])
+arg_length_is_invalid = not 1 < len(sys.argv) <= 3
+if arg_length_is_invalid or sys.argv[1] in ('-h', '--help'):
+    print("usage: {prog} <source> [<dest>]".format(prog=program))
+    sys.exit(1)
+
+source_filename = sys.argv[1]
+dest_filename = None
+try:
+    dest_filename = sys.argv[2]
+except IndexError:
+    pass
+
+# In Python, how can you load YAML mappings as OrderedDicts?
+# http://stackoverflow.com/a/21048064
+def dict_representer(dumper, data):
+    return dumper.represent_dict(data.iteritems())
+
+yaml.SafeDumper.add_representer(OrderedDict, dict_representer)
+
+def dict_constructor(loader, node):
+    return OrderedDict(loader.construct_pairs(node))
+
+yaml.add_constructor(
+        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+        dict_constructor)
+
+
+with open(source_filename, 'rb') as source:
+    if 'json_to_yaml' in program:
+        content = yaml.safe_dump(
+                json.load(source, object_pairs_hook=OrderedDict),
+                default_flow_style=False)
+    elif 'yaml_to_json' in program:
+        content = json.dumps(
+                yaml.load(source),
+                sort_keys=False,
+                indent=2)
+        content += '\n'
+
+    if dest_filename:
+        with open(dest_filename, 'wb') as dest:
+            dest.write(content)
+    else:
+        sys.stdout.write(content)
