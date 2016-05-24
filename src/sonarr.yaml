@@ -1,0 +1,23 @@
+$jason:
+  head:
+    title: Sonarr
+    description: Sonarr is a PVR for Usenet and BitTorrent users
+    icon: http://nuxref.com/wp-content/uploads/2014/07/nzbdrone128x128-icon.png
+    website:
+      text: Click here to learn about Sonarr
+      url: https://sonarr.tv/
+    actions:
+      $pull:
+        type: $cache.reset
+        success:
+          trigger: fetch
+        error:
+          trigger: fetch
+      $load:
+        type: $network.request
+        options:
+          url: '{{$keys.base_url}}/series'
+          headers:
+            X-Api-Key: '{{$keys.api_key}}'
+        success:
+          type: $render
