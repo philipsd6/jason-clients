@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+import os
+import sys
+import yaml
+import json
+from collections import OrderedDict
+
+program = os.path.basename(sys.argv[0])
+arg_length_is_invalid = len(sys.argv) <= 2
+if arg_length_is_invalid or sys.argv[1] in ('-h', '--help'):
+    print('usage: {prog} <base_url> <filename>...'.format(prog=program))
+    sys.exit(1)
+
+base_url, jason_scripts = sys.argv[1], sys.argv[2:]
+
+def create_item(base_url, script):
+    url = "{}/{}".format(base_url, script)
+    label = ' '.join(os.path.splitext(script)[0].split('-')).title()
+    item = OrderedDict()
+    item[u'type'] = 'label'
+    item[u'text'] = label
+    item[u'href'] = OrderedDict()
+    item[u'href'][u'url'] = url
+    item[u'href'][u'view'] = "Jason"
+    return item
+
+index = {u'$jason': OrderedDict()}
+index[u'$jason'][u'head'] = OrderedDict({u'title':u"Philip's Index"})
+index[u'$jason'][u'head'][u'description'] = u'An index of my Jason scripts'
+index[u'$jason'][u'body'] = OrderedDict({u'sections': []})
+
+items = [create_item(base_url, script)
+         for script in jason_scripts
+         if not script.endswith('index.json')]
+
+index[u'$jason'][u'body'][u'sections'].append(OrderedDict({u'items':items}))
+
+with open('index.json', 'wb') as f:
+    f.write(json.dumps(index, indent=2))
+    f.write('\n')
