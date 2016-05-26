@@ -19,6 +19,14 @@
             }, 
             {
               "type": "label", 
+              "text": "Images", 
+              "href": {
+                "url": "https://grimspace.philipdouglass.com/jason-clients/images.json", 
+                "view": "Jason"
+              }
+            }, 
+            {
+              "type": "label", 
               "text": "Sonarr", 
               "href": {
                 "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr.json", 
