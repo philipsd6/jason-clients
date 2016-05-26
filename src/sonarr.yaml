@@ -10,15 +10,44 @@ $jason:
       $load:
         type: $network.request
         options:
-          url: "{{$keys.base_url}}/series"
+          url: "https://grimspace.philipdouglass.com/sonarr/api/series"
           headers:
             X-Api-Key: "{{$keys.api_key}}"
         success:
           type: $render
     templates:
       body:
-        sections:
+        style:
+          background: "#cb4924"
+          border: none
+        nav:
+          style:
+            background: "#cb2802"
+            color: "#ffffff"
           items:
+            - type: tabs
+              style:
+                background: "#ac1704"
+                color: "#ffffff"
+                tintColor: "#eeeeee"
+              items:
+                - text: Series
+                  url: https://grimspace.philipdouglass.com/jason-clients/sonarr.json
+                - text: Calendar
+                  url: https://grimspace.philipdouglass.com/jason-clients/sonarr.json
+            - type: menu
+              image: https://www.culture-time.com/sites/default/files/icons-info-projet/plus-128.png
+              style:
+                color: "#ffffff"
+              action:
+                type: $widget.alert
+                options:
+                  title: Series Name
+                  description: Enter the title of the series to search for
+        sections:
+        - items:
             "{{#each $jason}}":
-              type: label
-              text: "{{title}}"
+              type: image
+              url: "https://grimspace.philipdouglass.com/sonarr/api{{ images.filter(function(v){return v.coverType == 'banner'})[0].url }}"
+              headers:
+                X-Api-Key: "{{$keys.api_key}}"
