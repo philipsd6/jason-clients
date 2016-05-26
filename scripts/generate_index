@@ -27,6 +27,7 @@ def create_item(base_url, script):
 index = {u'$jason': OrderedDict()}
 index[u'$jason'][u'head'] = OrderedDict({u'title':u"Philip's Index"})
 index[u'$jason'][u'head'][u'description'] = u'An index of my Jason scripts'
+index[u'$jason'][u'head'][u'icon'] = u'%s/icon.jpg' % base_url
 index[u'$jason'][u'body'] = OrderedDict({u'sections': []})
 
 items = [create_item(base_url, script)

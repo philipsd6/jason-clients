@@ -2,27 +2,28 @@
   "$jason": {
     "head": {
       "title": "Philip's Index", 
-      "description": "An index of my Jason scripts"
+      "description": "An index of my Jason scripts", 
+      "icon": "https://grimspace.philipdouglass.com/jason-clients/icon.jpg"
     }, 
     "body": {
       "sections": [
         {
           "items": [
             {
+              "type": "label", 
               "text": "Hello Jason", 
               "href": {
                 "url": "https://grimspace.philipdouglass.com/jason-clients/hello-jason.json", 
                 "view": "Jason"
-              }, 
-              "type": "label"
+              }
             }, 
             {
+              "type": "label", 
               "text": "Sonarr", 
               "href": {
                 "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr.json", 
                 "view": "Jason"
-              }, 
-              "type": "label"
+              }
             }
           ]
         }
