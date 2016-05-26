@@ -19,6 +19,26 @@
           }
         }, 
         "$load": {
+          "trigger": "draw"
+        }, 
+        "draw": [
+          {
+            "{{#if $cache && ('shows' in $cache) && $cache.shows && Array.isArray($cache.shows) && $cache.shows.length > 0}}": {
+              "type": "$render", 
+              "options": {
+                "data": {
+                  "$jason": "{{$cache}}"
+                }
+              }
+            }
+          }, 
+          {
+            "{{#else}}": {
+              "trigger": "fetch"
+            }
+          }
+        ], 
+        "fetch": {
           "type": "$network.request", 
           "options": {
             "url": "{{$keys.base_url}}/series", 
@@ -27,7 +47,78 @@
             }
           }, 
           "success": {
-            "type": "$render"
+            "trigger": "save_and_draw"
+          }
+        }, 
+        "save_and_draw": {
+          "{{#if Array.isArray($jason) && $jason.length > 0}}": {
+            "type": "$cache.set", 
+            "options": {
+              "shows": {
+                "{{#each $jason}}": {
+                  "id": "{{id}}", 
+                  "title": "{{title}}", 
+                  "poster": "{{images.filter(function(value) {return value.coverType == \"poster\"}[0]}}", 
+                  "fanart": "{{images.filter(function(value) {return value.coverType == \"fanart\"}[0]}}", 
+                  "banner": "{{images.filter(function(value) {return value.coverType == \"banner\"}[0]}}"
+                }
+              }
+            }, 
+            "success": {
+              "type": "$render"
+            }
+          }
+        }
+      }, 
+      "templates": {
+        "body": {
+          "style": {
+            "background": "#636363", 
+            "color": "#ffffff", 
+            "border": "#ffffff"
+          }, 
+          "nav": {
+            "style": {
+              "background": "#636363", 
+              "status": "dark", 
+              "color": "#ffffff"
+            }, 
+            "items": {
+              "type": "tabs", 
+              "style": {
+                "background": "#636363", 
+                "color": "#ffffff", 
+                "tintColor": "#ffffff"
+              }, 
+              "items": [
+                {
+                  "text": "Shows", 
+                  "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr.yaml"
+                }, 
+                {
+                  "text": "Calendar", 
+                  "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr-calendar.yaml"
+                }, 
+                {
+                  "text": "Wanted", 
+                  "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr-wanted.yaml"
+                }
+              ]
+            }
+          }, 
+          "sections": {
+            "{{#each $jason.shows}}": {
+              "items": [
+                {
+                  "type": "image", 
+                  "url": "{{banner}}", 
+                  "href": {
+                    "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr-seasons.yaml", 
+                    "view": "Jason"
+                  }
+                }
+              ]
+            }
           }
         }
       }
