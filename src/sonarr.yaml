@@ -11,6 +11,7 @@ $jason:
         type: $set
         options:
           api_key: "{{$keys.api_key}}"
+          base_url: "{{$keys.base_url}}"
         success:
           trigger: fetch
       fetch:
@@ -58,8 +59,8 @@ $jason:
                     series_name: "{{encodeURIComponent($json.series_name)}}"
         sections:
         - items:
-            "{{#each $jason.map(function(i){return Object.assign(i, {api_key: $get.api_key});})}}":
+            "{{#each $jason.map(function(i){return Object.assign(i, {api_key: $get.api_key, base_url: $get.base_url});})}}":
               type: image
               url: >-
-                https://grimspace.philipdouglass.com/sonarr/api{{ images.filter(function(v){return
+                {{ base_url + images.filter(function(v){return
                 ('coverType' in v) && v.coverType == 'banner'})[0].url + '&apikey=' + api_key }}
