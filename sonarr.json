@@ -10,6 +10,15 @@
       }, 
       "actions": {
         "$load": {
+          "type": "$set", 
+          "options": {
+            "api_key": "{{$keys.api_key}}"
+          }, 
+          "success": {
+            "trigger": "fetch"
+          }
+        }, 
+        "fetch": {
           "type": "$network.request", 
           "options": {
             "url": "https://grimspace.philipdouglass.com/sonarr/api/series", 
@@ -75,9 +84,9 @@
           "sections": [
             {
               "items": {
-                "{{#each $jason}}": {
+                "{{#each $jason.map(function(i){return Object.assign(i, {api_key: $get.api_key});})}}": {
                   "type": "image", 
-                  "url": "https://grimspace.philipdouglass.com/sonarr/api{{ images.filter(function(v){return ('coverType' in v) && v.coverType == 'banner'})[0].url }}&{{$keys.api_key}}"
+                  "url": "https://grimspace.philipdouglass.com/sonarr/api{{ images.filter(function(v){return ('coverType' in v) && v.coverType == 'banner'})[0].url + '&apikey=' + api_key }}"
                 }
               }
             }

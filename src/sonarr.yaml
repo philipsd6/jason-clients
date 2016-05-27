@@ -8,6 +8,12 @@ $jason:
       url: https://sonarr.tv/
     actions:
       $load:
+        type: $set
+        options:
+          api_key: "{{$keys.api_key}}"
+        success:
+          trigger: fetch
+      fetch:
         type: $network.request
         options:
           # Bug: Using $keys.base_url doesn't work for url
@@ -52,9 +58,8 @@ $jason:
                     series_name: "{{encodeURIComponent($json.series_name)}}"
         sections:
         - items:
-            "{{#each $jason}}":
+            "{{#each $jason.map(function(i){return Object.assign(i, {api_key: $get.api_key});})}}":
               type: image
-              # WIP: how do I access $keys from inside the #each loop context?
               url: >-
                 https://grimspace.philipdouglass.com/sonarr/api{{ images.filter(function(v){return
-                ('coverType' in v) && v.coverType == 'banner'})[0].url }}&{{$keys.api_key}}
+                ('coverType' in v) && v.coverType == 'banner'})[0].url + '&apikey=' + api_key }}
