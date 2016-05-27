@@ -3,7 +3,7 @@
     "head": {
       "title": "Sonarr", 
       "description": "Sonarr is a PVR for Usenet and BitTorrent users", 
-      "icon": "http://nuxref.com/wp-content/uploads/2014/07/nzbdrone128x128-icon.png", 
+      "icon": "https://raw.githubusercontent.com/Sonarr/Sonarr/develop/Logo/128.png", 
       "website": {
         "text": "Click here to learn about Sonarr", 
         "url": "https://sonarr.tv/"
