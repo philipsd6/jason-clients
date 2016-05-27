@@ -38,13 +38,17 @@
                   }, 
                   {
                     "text": "Calendar", 
-                    "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr.json"
+                    "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr-calendar.json"
+                  }, 
+                  {
+                    "text": "Wanted", 
+                    "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr-wanted.json"
                   }
                 ]
               }, 
               {
                 "type": "menu", 
-                "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAP1BMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACzJYIvAAAAFHRSTlMABAgOEyYtLjBHT1VWcK26vOjr8RM7VxsAAABrSURBVDjL7ZM5EoAgEARHQQ5FUZj/v9VArCJgITG0w+kOd4GKabHWGg2JOZEkuUqBfzwvKQgl4B80AhUpc63AyS4afU8zCuwHQe4HC/auTxPgtlA43vkdgp//g2mwjQJXfBTfe88keap6uwHsySOLVU7xCwAAAABJRU5ErkJggg==", 
+                "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAM1BMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACjBUbJAAAAEHRSTlMAAQIVFyMqMlVrhZGiutri/MbJQAAAAE1JREFUOMvt0SkWACEMRMFmJ2zT9z/t2GBiQfBd55ULsOVrgZmQ0QSdzA+cAi5l1SRF7wgMmhUsG1SE1lUfOfUW/35xLWhkMkFYw+2XH/GqCzkfRahHAAAAAElFTkSuQmCC", 
                 "action": {
                   "type": "$widget.alert", 
                   "options": {
@@ -56,6 +60,13 @@
                         "value": "Name"
                       }
                     ]
+                  }, 
+                  "success": {
+                    "type": "href", 
+                    "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr-series-lookup.json", 
+                    "options": {
+                      "series_name": "{{encodeURIComponent($json.series_name)}}"
+                    }
                   }
                 }
               }
@@ -65,8 +76,8 @@
             {
               "items": {
                 "{{#each $jason}}": {
-                  "type": "label", 
-                  "text": "{{$keys.api_key}}"
+                  "type": "image", 
+                  "url": "https://grimspace.philipdouglass.com/sonarr/api{{ images.filter(function(v){return ('coverType' in v) && v.coverType == 'banner'})[0].url }}&{{$keys.api_key}}"
                 }
               }
             }
