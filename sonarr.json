@@ -25,22 +25,12 @@
       "templates": {
         "body": {
           "style": {
-            "background": "#cb4924", 
             "border": "none"
           }, 
           "nav": {
-            "style": {
-              "background": "#cb2802", 
-              "color": "#ffffff"
-            }, 
             "items": [
               {
                 "type": "tabs", 
-                "style": {
-                  "background": "#ac1704", 
-                  "color": "#ffffff", 
-                  "tintColor": "#eeeeee"
-                }, 
                 "items": [
                   {
                     "text": "Series", 
@@ -54,15 +44,18 @@
               }, 
               {
                 "type": "menu", 
-                "image": "https://www.culture-time.com/sites/default/files/icons-info-projet/plus-128.png", 
-                "style": {
-                  "color": "#ffffff"
-                }, 
+                "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAP1BMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACzJYIvAAAAFHRSTlMABAgOEyYtLjBHT1VWcK26vOjr8RM7VxsAAABrSURBVDjL7ZM5EoAgEARHQQ5FUZj/v9VArCJgITG0w+kOd4GKabHWGg2JOZEkuUqBfzwvKQgl4B80AhUpc63AyS4afU8zCuwHQe4HC/auTxPgtlA43vkdgp//g2mwjQJXfBTfe88keap6uwHsySOLVU7xCwAAAABJRU5ErkJggg==", 
                 "action": {
                   "type": "$widget.alert", 
                   "options": {
-                    "title": "Series Name", 
-                    "description": "Enter the title of the series to search for"
+                    "title": "Add Series", 
+                    "description": "Enter a show name to search for", 
+                    "form": [
+                      {
+                        "name": "series_name", 
+                        "value": "Name"
+                      }
+                    ]
                   }
                 }
               }
@@ -72,11 +65,8 @@
             {
               "items": {
                 "{{#each $jason}}": {
-                  "type": "image", 
-                  "url": "https://grimspace.philipdouglass.com/sonarr/api{{ images.filter(function(v){return v.coverType == 'banner'})[0].url }}", 
-                  "headers": {
-                    "X-Api-Key": "{{$keys.api_key}}"
-                  }
+                  "type": "label", 
+                  "text": "{{$keys.api_key}}"
                 }
               }
             }
