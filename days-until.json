@@ -1,0 +1,48 @@
+{
+  "$jason": {
+    "head": {
+      "title": "Days Until My Trip", 
+      "data": {
+        "event_date": "2016-06-21T20:55:00+04:00"
+      }, 
+      "actions": {
+        "$pull": {
+          "type": "$reload"
+        }
+      }, 
+      "templates": {
+        "body": {
+          "style": {
+            "background": "{{ (function() { var now = new Date(); return 'https://unsplash.it/640/1096/?random&gravity=center#' + now.getTime() })() }}"
+          }, 
+          "sections": [
+            {
+              "items": [
+                {
+                  "type": "vertical", 
+                  "style": {
+                    "padding": "40"
+                  }, 
+                  "components": [
+                    {
+                      "type": "label", 
+                      "text": "{{ (function(){ var oneDay = 24*60*60*1000; var firstDate = new Date(); var secondDate = new Date(event_date); return '' + Math.abs( (firstDate.getTime() - secondDate.getTime()) /oneDay ).toFixed(2); })() + ' days' }}", 
+                      "style": {
+                        "padding": "100", 
+                        "font": "HelveticaNeue-Bold", 
+                        "size": "90", 
+                        "background": "rgba(10,20,20,0.5)", 
+                        "color": "#efffff", 
+                        "align": "center"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

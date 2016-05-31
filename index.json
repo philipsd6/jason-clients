@@ -11,6 +11,14 @@
           "items": [
             {
               "type": "label", 
+              "text": "Days Until", 
+              "href": {
+                "url": "https://grimspace.philipdouglass.com/jason-clients/days-until.json", 
+                "view": "Jason"
+              }
+            }, 
+            {
+              "type": "label", 
               "text": "Hello Jason", 
               "href": {
                 "url": "https://grimspace.philipdouglass.com/jason-clients/hello-jason.json", 
@@ -19,25 +27,9 @@
             }, 
             {
               "type": "label", 
-              "text": "Images", 
-              "href": {
-                "url": "https://grimspace.philipdouglass.com/jason-clients/images.json", 
-                "view": "Jason"
-              }
-            }, 
-            {
-              "type": "label", 
               "text": "Sonarr", 
               "href": {
                 "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr.json", 
-                "view": "Jason"
-              }
-            }, 
-            {
-              "type": "label", 
-              "text": "Sonarr Series Lookup", 
-              "href": {
-                "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr-series-lookup.json", 
                 "view": "Jason"
               }
             }
