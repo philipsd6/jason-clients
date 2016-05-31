@@ -12,6 +12,7 @@ $jason:
         options:
           api_key: "{{$keys.api_key}}"
           base_url: "{{$keys.base_url}}"
+          endpoint: series
         success:
           trigger: fetch
       $pull:
@@ -19,8 +20,7 @@ $jason:
       fetch:
         type: $network.request
         options:
-          # Bug: Using $keys.base_url doesn't work for url
-          url: https://grimspace.philipdouglass.com/sonarr/api/series
+          url: "{{$get.base_url + '/' + $get.endpoint }}"
           headers:
             X-Api-Key: "{{$keys.api_key}}"
         success:

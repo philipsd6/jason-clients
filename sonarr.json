@@ -13,7 +13,8 @@
           "type": "$set", 
           "options": {
             "api_key": "{{$keys.api_key}}", 
-            "base_url": "{{$keys.base_url}}"
+            "base_url": "{{$keys.base_url}}", 
+            "endpoint": "series"
           }, 
           "success": {
             "trigger": "fetch"
@@ -25,7 +26,7 @@
         "fetch": {
           "type": "$network.request", 
           "options": {
-            "url": "https://grimspace.philipdouglass.com/sonarr/api/series", 
+            "url": "{{$get.base_url + '/' + $get.endpoint }}", 
             "headers": {
               "X-Api-Key": "{{$keys.api_key}}"
             }
