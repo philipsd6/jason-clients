@@ -86,18 +86,27 @@ $jason:
                   padding: "8"
                   size: "12"
               items:
-                "{{#each series}}":
-                  type: vertical
-                  style:
-                    padding: "0"
-                  components:
-                  - type: image
+              - type: vertical
+                style:
+                  padding: "0"
+                components:
+                  "{{#each series}}":
+                    type: image
                     url: >-
-                      {{ base_url + images.filter(function(v){return
-                      ('coverType' in v) && v.coverType == 'banner'})[0].url + '&apikey=' + api_key }}
+                      {{ base_url + images.filter(function(v) {
+                      return ('coverType' in v) && v.coverType == 'banner'
+                      })[0].url + '&apikey=' + api_key }}
                     style:
                       height: "140"
-        - "{{#elseif $get.endpoint=='seasons'}}":
+                    action:
+                      type: $widget.toast
+                      options:
+                        text: This action is not being triggered
+        - "{{#elseif /^series[/][0-9]+/.test($get.endpoint==)}}":
             header:
               type: label
-              text: "Seasons"
+              text: "{{ $get.endpoint }}"
+        - "{{#else}}":
+            header:
+              type: label
+              text: Something Else
