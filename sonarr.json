@@ -88,60 +88,43 @@
           }, 
           "sections": [
             {
-              "header": {
-                "type": "label", 
-                "text": "Continuing", 
-                "style": {
-                  "background": "#efefee", 
-                  "font": "HelveticaNeue-Bold", 
-                  "padding": "8", 
-                  "size": "12"
-                }
-              }, 
-              "items": {
-                "{{#each $jason.filter(function(v){return v.status == 'continuing'}).map(function(i){return Object.assign(i, {api_key: $get.api_key, base_url: $get.base_url});})}}": {
-                  "type": "vertical", 
-                  "style": {
-                    "padding": "0"
-                  }, 
-                  "components": [
-                    {
-                      "type": "image", 
-                      "url": "{{ base_url + images.filter(function(v){return ('coverType' in v) && v.coverType == 'banner'})[0].url + '&apikey=' + api_key }}", 
-                      "style": {
-                        "height": "140"
-                      }
+              "{{#if $get.endpoint=='series'}}": {
+                "{{#each ['Continuing', 'Ended'].map(function(i) { return { status: i, series: $jason.filter(function(v) { return v.status == i.toLowerCase() }).map(function(j) { return Object.assign(j, { api_key: $get.api_key, base_url: $get.base_url }); }) } }) }}": {
+                  "header": {
+                    "type": "label", 
+                    "text": "{{status + ' Series'}}", 
+                    "style": {
+                      "background": "#efefee", 
+                      "font": "HelveticaNeue-Bold", 
+                      "padding": "8", 
+                      "size": "12"
                     }
-                  ]
+                  }, 
+                  "items": {
+                    "{{#each series}}": {
+                      "type": "vertical", 
+                      "style": {
+                        "padding": "0"
+                      }, 
+                      "components": [
+                        {
+                          "type": "image", 
+                          "url": "{{ base_url + images.filter(function(v){return ('coverType' in v) && v.coverType == 'banner'})[0].url + '&apikey=' + api_key }}", 
+                          "style": {
+                            "height": "140"
+                          }
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }, 
             {
-              "header": {
-                "type": "label", 
-                "text": "Ended", 
-                "style": {
-                  "background": "#efefee", 
-                  "font": "HelveticaNeue-Bold", 
-                  "padding": "8", 
-                  "size": "12"
-                }
-              }, 
-              "items": {
-                "{{#each $jason.filter(function(v){return v.status == 'ended'}).map(function(i){return Object.assign(i, {api_key: $get.api_key, base_url: $get.base_url});})}}": {
-                  "type": "vertical", 
-                  "style": {
-                    "padding": "0"
-                  }, 
-                  "components": [
-                    {
-                      "type": "image", 
-                      "url": "{{ base_url + images.filter(function(v){return ('coverType' in v) && v.coverType == 'banner'})[0].url + '&apikey=' + api_key }}", 
-                      "style": {
-                        "height": "140"
-                      }
-                    }
-                  ]
+              "{{#elseif $get.endpoint=='seasons'}}": {
+                "header": {
+                  "type": "label", 
+                  "text": "Seasons"
                 }
               }
             }
