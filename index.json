@@ -11,9 +11,9 @@
           "items": [
             {
               "type": "label", 
-              "text": "Days Until", 
+              "text": "Countdown", 
               "href": {
-                "url": "https://grimspace.philipdouglass.com/jason-clients/days-until.json", 
+                "url": "https://grimspace.philipdouglass.com/jason-clients/countdown.json", 
                 "view": "Jason"
               }
             }, 
