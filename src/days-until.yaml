@@ -1,17 +1,23 @@
 $jason:
   head:
-    title: Days Until My Trip
+    title: Countdown
     data:
-      event_date: "2016-06-21T20:55:00+04:00"
+      event_date: "2016-06-21T16:55:00-04:00"
     actions:
-      $pull:
-        type: "$reload"
+      $load:
+        type: $timer.start
+        options:
+          interval: "1"
+          name: timer1
+          repeats: true
+          action:
+            type: $render
     templates:
       body:
         style:
           background: "{{
             (function() { var now = new Date();
-                          return 'https://unsplash.it/640/1096/?random&gravity=center#' + now.getTime()
+                          return 'https://unsplash.it/640/1096/?random&gravity=center#' + Math.floor(now.getTime()/(60*1000))
             })()
           }}"
         sections:
@@ -23,18 +29,32 @@ $jason:
             - type: label
               text: "{{
                 (function(){ var oneDay = 24*60*60*1000;
-                              var firstDate = new Date();
-                              var secondDate = new Date(event_date);
-                              return '' + Math.abs(
-                                  (firstDate.getTime() - secondDate.getTime())
-                                  /oneDay
-                              ).toFixed(2);
-                })() + ' days'
+                             var now = new Date();
+                             var eventDate = new Date(event_date);
+                             var interval = Math.abs(now.getTime() - eventDate.getTime());
+                             var days = interval/oneDay,
+                                 remainder = days % 1;
+                             days -= remainder;
+                             var hours = remainder * 24,
+                                 remainder = hours % 1;
+                             hours -= remainder;
+                             var minutes = remainder * 60,
+                                 remainder = minutes % 1;
+                             minutes -= remainder;
+                             var seconds = remainder * 60,
+                                 remainder = seconds % 1;
+                             seconds -= remainder;
+                             var formatted = days + ' days\\n'
+                                           + ('0' + hours % 12).substr(-2) + ':'
+                                           + ('0' + minutes).substr(-2) + ':'
+                                           + ('0' + seconds).substr(-2);
+                             return formatted;
+                })()
               }}"
               style:
                 padding: "100"
                 font: HelveticaNeue-Bold
-                size: "90"
+                size: "61"
                 background: rgba(10,20,20,0.5)
                 color: "#efffff"
                 align: center
