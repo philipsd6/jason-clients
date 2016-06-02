@@ -14,7 +14,7 @@
           "options": {
             "api_key": "{{$keys.api_key}}", 
             "base_url": "{{$keys.base_url}}", 
-            "endpoint": "series"
+            "endpoint": "{{ typeof $params == 'object' && 'endpoint' in $params && $params.endpoint || 'series' }}"
           }, 
           "success": {
             "trigger": "fetch"
@@ -41,9 +41,7 @@
           "font": "HelveticaNeue-Condensed", 
           "size": "6", 
           "corner_radius": "3", 
-          "height": "14", 
-          "color": "rgba(20,20,200,0.7)", 
-          "background": "rgba(200,200,255,0.5)"
+          "height": "14"
         }
       }, 
       "templates": {
@@ -77,7 +75,7 @@
                   "type": "$widget.alert", 
                   "options": {
                     "title": "Params", 
-                    "description": "{{JSON.stringify($params)}}"
+                    "description": "{{$get.endpoint}}"
                   }
                 }
               }
@@ -123,7 +121,6 @@
                   "header": {
                     "type": "horizontal", 
                     "style": {
-                      "background": "rgba(0,0,0,0.7)", 
                       "padding": "5%", 
                       "spacing": "10"
                     }, 
@@ -132,7 +129,7 @@
                         "type": "image", 
                         "url": "{{ $get.base_url + $jason.images.filter(function(v) { return ('coverType' in v) && v.coverType == 'poster' })[0].url + '&apikey=' + $get.api_key }}", 
                         "style": {
-                          "height": "20%"
+                          "width": "100"
                         }
                       }, 
                       {
@@ -142,7 +139,6 @@
                             "type": "label", 
                             "text": "{{ $jason.title }}", 
                             "style": {
-                              "color": "#ffffff", 
                               "font": "HelveticaNeue", 
                               "size": "24"
                             }
@@ -151,6 +147,7 @@
                             "type": "horizontal", 
                             "align": "right", 
                             "distribution": "right", 
+                            "spacing": "5", 
                             "components": [
                               {
                                 "type": "button", 

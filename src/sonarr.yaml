@@ -12,9 +12,9 @@ $jason:
         options:
           api_key: "{{$keys.api_key}}"
           base_url: "{{$keys.base_url}}"
-          #endpoint: "{{ 'endpoint' in $params && $params.endpoint || 'series' }}"
-          #endpoint: "{{(function(){return ('endpoint' in $params) && $params.endpoint || 'series';})()}}"
-          endpoint: series
+          endpoint: >-
+            {{ typeof $params == 'object'
+            && 'endpoint' in $params && $params.endpoint || 'series' }}
         success:
           trigger: fetch
       $pull:
@@ -33,8 +33,6 @@ $jason:
         size: "6"
         corner_radius: "3"
         height: "14"
-        color: rgba(20,20,200,0.7)
-        background: rgba(200,200,255,0.5)
     templates:
       body:
         style:
@@ -59,7 +57,7 @@ $jason:
                 type: $widget.alert
                 options:
                   title: Params
-                  description: "{{JSON.stringify($params)}}"
+                  description: "{{$get.endpoint}}"
                   #title: Add Series
                   #description: Enter a show name to search for
                   #form:
@@ -118,7 +116,6 @@ $jason:
           - header:
               type: horizontal
               style:
-                background: rgba(0,0,0,0.7)
                 padding: 5%
                 spacing: "10"
               components:
@@ -128,18 +125,18 @@ $jason:
                   return ('coverType' in v) && v.coverType == 'poster'
                   })[0].url + '&apikey=' + $get.api_key }}
                 style:
-                  height: 20%
+                  width: "100"
               - type: vertical
                 components:
                 - type: label
                   text: "{{ $jason.title }}"
                   style:
-                    color: "#ffffff"
                     font: HelveticaNeue
                     size: "24"
                 - type: horizontal
                   align: right
                   distribution: right
+                  spacing: "5"
                   components:
                   - type: button
                     class: header_button
