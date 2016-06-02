@@ -14,6 +14,9 @@ $jason:
             type: $render
     templates:
       body:
+        nav:
+          style:
+            background: rgba(0,0,0,0)
         style:
           background: "{{
             (function() { var now = new Date();
@@ -24,8 +27,27 @@ $jason:
         - items:
           - type: vertical
             style:
-              padding: "40"
+              padding: "25"
+              spacing: "0"
             components:
+            - type: label
+              text: "{{
+                (function(){ var oneDay = 24*60*60*1000;
+                             var now = new Date();
+                             var eventDate = new Date(event_date);
+                             var interval = Math.abs(now.getTime() - eventDate.getTime());
+                             var days = interval/oneDay,
+                                 remainder = days % 1;
+                             days -= remainder;
+                             return days + ' days'
+                })()
+              }}"
+              style:
+                font: HelveticaNeue-Bold
+                size: "90"
+                color: rgba(255,255,255,0.7)
+                background: rgba(0,0,0,0.1)
+                align: center
             - type: label
               text: "{{
                 (function(){ var oneDay = 24*60*60*1000;
@@ -44,18 +66,15 @@ $jason:
                              var seconds = remainder * 60,
                                  remainder = seconds % 1;
                              seconds -= remainder;
-                             var formatted = days + ' days\\n'
-                                           + ('0' + hours % 12).substr(-2) + ':'
+                             var formatted = ('0' + hours % 12).substr(-2) + ':'
                                            + ('0' + minutes).substr(-2) + ':'
                                            + ('0' + seconds).substr(-2);
                              return formatted;
                 })()
               }}"
               style:
-                padding: "100"
                 font: HelveticaNeue-Bold
-                size: "61"
-                background: rgba(10,20,20,0.5)
-                color: "#efffff"
+                size: "60"
+                color: rgba(255,255,255,0.8)
+                background: rgba(0,0,0,0.1)
                 align: center
-
