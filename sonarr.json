@@ -36,6 +36,16 @@
           }
         }
       }, 
+      "styles": {
+        "header_button": {
+          "font": "HelveticaNeue-Condensed", 
+          "size": "6", 
+          "corner_radius": "3", 
+          "height": "14", 
+          "color": "rgba(20,20,200,0.7)", 
+          "background": "rgba(200,200,255,0.5)"
+        }
+      }, 
       "templates": {
         "body": {
           "style": {
@@ -79,7 +89,7 @@
                     "type": "href", 
                     "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr-series-lookup.json", 
                     "options": {
-                      "series_name": "{{encodeURIComponent($json.series_name)}}"
+                      "series_name": "{{encodeURIComponent($jason.series_name)}}"
                     }
                   }
                 }
@@ -100,47 +110,96 @@
                       "size": "12"
                     }
                   }, 
-                  "items": [
-                    {
-                      "type": "vertical", 
+                  "items": {
+                    "{{#each series}}": {
+                      "type": "image", 
+                      "url": "{{ base_url + images.filter(function(v) { return ('coverType' in v) && v.coverType == 'banner' })[0].url + '&apikey=' + api_key }}", 
                       "style": {
+                        "width": "100%", 
                         "padding": "0"
                       }, 
-                      "components": {
-                        "{{#each series}}": {
-                          "type": "image", 
-                          "url": "{{ base_url + images.filter(function(v) { return ('coverType' in v) && v.coverType == 'banner' })[0].url + '&apikey=' + api_key }}", 
-                          "style": {
-                            "height": "140"
-                          }, 
-                          "action": {
-                            "type": "$widget.toast", 
-                            "options": {
-                              "text": "This action is not being triggered"
-                            }
-                          }
+                      "action": {
+                        "type": "$set", 
+                        "options": {
+                          "endpoint": "{{ 'series/' + id }}"
+                        }, 
+                        "success": {
+                          "trigger": "fetch"
                         }
                       }
                     }
-                  ]
+                  }
                 }
               }
             }, 
             {
-              "{{#elseif /^series[/][0-9]+/.test($get.endpoint==)}}": {
-                "header": {
-                  "type": "label", 
-                  "text": "{{ $get.endpoint }}"
+              "{{#elseif /^series[/][0-9]+/.test($get.endpoint)}}": [
+                {
+                  "header": {
+                    "type": "horizontal", 
+                    "style": {
+                      "background": "rgba(0,0,0,0.7)", 
+                      "padding": "5%", 
+                      "spacing": "10"
+                    }, 
+                    "components": [
+                      {
+                        "type": "image", 
+                        "url": "{{ $get.base_url + $jason.images.filter(function(v) { return ('coverType' in v) && v.coverType == 'poster' })[0].url + '&apikey=' + $get.api_key }}", 
+                        "style": {
+                          "height": "20%"
+                        }
+                      }, 
+                      {
+                        "type": "vertical", 
+                        "components": [
+                          {
+                            "type": "label", 
+                            "text": "{{ $jason.title }}", 
+                            "style": {
+                              "color": "#ffffff", 
+                              "font": "HelveticaNeue", 
+                              "size": "24"
+                            }
+                          }, 
+                          {
+                            "type": "horizontal", 
+                            "align": "right", 
+                            "distribution": "right", 
+                            "components": [
+                              {
+                                "type": "button", 
+                                "class": "header_button", 
+                                "text": "{{ $jason.network }}"
+                              }, 
+                              {
+                                "type": "button", 
+                                "class": "header_button", 
+                                "text": "TheTVDB"
+                              }, 
+                              {
+                                "type": "button", 
+                                "class": "header_button", 
+                                "text": "IMDB"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 }
-              }
+              ]
             }, 
             {
-              "{{#else}}": {
-                "header": {
-                  "type": "label", 
-                  "text": "Something Else"
+              "{{#else}}": [
+                {
+                  "header": {
+                    "type": "label", 
+                    "text": "{{JSON.stringify($jason)}}"
+                  }
                 }
-              }
+              ]
             }
           ]
         }
