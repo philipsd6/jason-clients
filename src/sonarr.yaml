@@ -12,6 +12,8 @@ $jason:
         options:
           api_key: "{{$keys.api_key}}"
           base_url: "{{$keys.base_url}}"
+          #endpoint: "{{ 'endpoint' in $params && $params.endpoint || 'series' }}"
+          #endpoint: "{{(function(){return ('endpoint' in $params) && $params.endpoint || 'series';})()}}"
           endpoint: series
         success:
           trigger: fetch
@@ -56,17 +58,19 @@ $jason:
               action:
                 type: $widget.alert
                 options:
-                  title: Add Series
-                  description: Enter a show name to search for
-                  form:
-                  - name: series_name
-                    value: Name
-                success:
-                  # WIP: how do I make an action open a Jason view in the success callback?
-                  type: href
-                  url: https://grimspace.philipdouglass.com/jason-clients/sonarr-series-lookup.json
-                  options:
-                    series_name: "{{encodeURIComponent($jason.series_name)}}"
+                  title: Params
+                  description: "{{JSON.stringify($params)}}"
+                  #title: Add Series
+                  #description: Enter a show name to search for
+                  #form:
+                  #- name: series_name
+                    #value: Name
+                #success:
+                  ## WIP: how do I make an action open a Jason view in the success callback?
+                  #type: href
+                  #url: https://grimspace.philipdouglass.com/jason-clients/sonarr-series-lookup.json
+                  #options:
+                    #series_name: "{{encodeURIComponent($jason.series_name)}}"
         sections:
         - "{{#if $get.endpoint=='series'}}":
             ? "{{#each
@@ -103,12 +107,11 @@ $jason:
                   style:
                     width: "100%"
                     padding: "0"
-                  action:
-                    type: $set
+                  href:
+                    url: https://grimspace.philipdouglass.com/jason-clients/sonarr.json
+                    view: Jason
                     options:
                       endpoint: "{{ 'series/' + id }}"
-                    success:
-                      trigger: fetch
         - "{{#elseif /^series[/][0-9]+/.test($get.endpoint)}}":
           # Ok, display a single series with a list of seasons and episodes...
           # Header: Poster | Title / Summary / buttons: [Network|Trakt|TheTVDB|IMDB|TVRage|TVMaze]

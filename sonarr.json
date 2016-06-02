@@ -76,21 +76,8 @@
                 "action": {
                   "type": "$widget.alert", 
                   "options": {
-                    "title": "Add Series", 
-                    "description": "Enter a show name to search for", 
-                    "form": [
-                      {
-                        "name": "series_name", 
-                        "value": "Name"
-                      }
-                    ]
-                  }, 
-                  "success": {
-                    "type": "href", 
-                    "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr-series-lookup.json", 
-                    "options": {
-                      "series_name": "{{encodeURIComponent($jason.series_name)}}"
-                    }
+                    "title": "Params", 
+                    "description": "{{JSON.stringify($params)}}"
                   }
                 }
               }
@@ -118,13 +105,11 @@
                         "width": "100%", 
                         "padding": "0"
                       }, 
-                      "action": {
-                        "type": "$set", 
+                      "href": {
+                        "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr.json", 
+                        "view": "Jason", 
                         "options": {
                           "endpoint": "{{ 'series/' + id }}"
-                        }, 
-                        "success": {
-                          "trigger": "fetch"
                         }
                       }
                     }
