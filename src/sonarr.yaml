@@ -13,8 +13,7 @@ $jason:
           api_key: "{{$keys.api_key}}"
           base_url: "{{$keys.base_url}}"
           endpoint: >-
-            {{ typeof $params == 'object'
-            && 'endpoint' in $params && $params.endpoint || 'series' }}
+            {{ typeof $params == 'object' && 'endpoint' in $params && $params.endpoint || 'series' }}
         success:
           trigger: fetch
       $pull:
@@ -109,10 +108,10 @@ $jason:
                     url: https://grimspace.philipdouglass.com/jason-clients/sonarr.json
                     view: Jason
                     options:
-                      endpoint: "{{ 'series/' + id }}"
+                      endpoint: >-
+                        {{ 'episode?seriesId=' + id }}
         - "{{#elseif /^series[/][0-9]+/.test($get.endpoint)}}":
-          # Ok, display a single series with a list of seasons and episodes...
-          # Header: Poster | Title / Summary / buttons: [Network|Trakt|TheTVDB|IMDB|TVRage|TVMaze]
+          # Display a series info page
           - header:
               type: horizontal
               style:
@@ -133,20 +132,14 @@ $jason:
                   style:
                     font: HelveticaNeue
                     size: "24"
-                - type: horizontal
-                  align: right
-                  distribution: right
-                  spacing: "5"
-                  components:
-                  - type: button
-                    class: header_button
-                    text: "{{ $jason.network }}"
-                  - type: button
-                    class: header_button
-                    text: TheTVDB
-                  - type: button
-                    class: header_button
-                    text: IMDB
+                - type: label
+                  text: "{{ $jason.overview }}"
+        - "{{#elseif /^episode?seriesId=[0-9]+/.test($get.endpoint)}}":
+          # Display a series episode list
+          - header:
+              type: label
+              text: "{{JSON.stringify($jason)}}"
+
         - "{{#else}}":
           - header:
               type: label

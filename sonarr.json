@@ -107,7 +107,7 @@
                         "url": "https://grimspace.philipdouglass.com/jason-clients/sonarr.json", 
                         "view": "Jason", 
                         "options": {
-                          "endpoint": "{{ 'series/' + id }}"
+                          "endpoint": "{{ 'episode?seriesId=' + id }}"
                         }
                       }
                     }
@@ -144,31 +144,22 @@
                             }
                           }, 
                           {
-                            "type": "horizontal", 
-                            "align": "right", 
-                            "distribution": "right", 
-                            "spacing": "5", 
-                            "components": [
-                              {
-                                "type": "button", 
-                                "class": "header_button", 
-                                "text": "{{ $jason.network }}"
-                              }, 
-                              {
-                                "type": "button", 
-                                "class": "header_button", 
-                                "text": "TheTVDB"
-                              }, 
-                              {
-                                "type": "button", 
-                                "class": "header_button", 
-                                "text": "IMDB"
-                              }
-                            ]
+                            "type": "label", 
+                            "text": "{{ $jason.overview }}"
                           }
                         ]
                       }
                     ]
+                  }
+                }
+              ]
+            }, 
+            {
+              "{{#elseif /^episode?seriesId=[0-9]+/.test($get.endpoint)}}": [
+                {
+                  "header": {
+                    "type": "label", 
+                    "text": "{{JSON.stringify($jason)}}"
                   }
                 }
               ]
